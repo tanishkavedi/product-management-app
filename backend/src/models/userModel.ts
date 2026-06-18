@@ -1,0 +1,22 @@
+import pool from "../config/db";
+import { User } from "../types";
+
+export const createUser = async (
+  name : string,
+  email : string ,
+  hashedPassword: String
+): Promise<User> => {
+  const result = await pool.query(
+    `INSERT INTO users (name, email, passowrd)
+    VALUES ($1, $2, $3) RETURNING *`,
+    [name, email, hashedPassword]
+  );
+  return result.rows[0];
+};
+
+export const findUserByEmail = async (email:string): Promise<User | null> => {
+  const resutl = await pool.query(
+    [email]
+  );
+  return Result.rows[0] || null;
+};
