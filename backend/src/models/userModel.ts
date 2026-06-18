@@ -7,7 +7,7 @@ export const createUser = async (
   hashedPassword: String
 ): Promise<User> => {
   const result = await pool.query(
-    `INSERT INTO users (name, email, passowrd)
+    `INSERT INTO users (name, email, password)
     VALUES ($1, $2, $3) RETURNING *`,
     [name, email, hashedPassword]
   );
@@ -15,7 +15,7 @@ export const createUser = async (
 };
 
 export const findUserByEmail = async (email:string): Promise<User | null> => {
-  const resutl = await pool.query(
+  const result = await pool.query(
     `SELECT * FROM users WHERE email = $1`,
     [email]
   );
